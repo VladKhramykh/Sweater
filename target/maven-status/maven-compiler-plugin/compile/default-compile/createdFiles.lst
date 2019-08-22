@@ -1,0 +1,17 @@
+com\example\app\domain\dto\CaptchaResponseDto.class
+com\example\app\config\WebSecurityConfig.class
+com\example\app\controller\RegistrationController.class
+com\example\app\domain\Message.class
+com\example\app\domain\Role.class
+com\example\app\domain\User.class
+com\example\app\Repositories\MessageRepository.class
+com\example\app\config\WebSecurityConfig$1.class
+com\example\app\Application.class
+com\example\app\Repositories\UserRepository.class
+com\example\app\controller\MainController.class
+com\example\app\config\MailConfig.class
+com\example\app\config\MvcConfig.class
+com\example\app\controller\ControllerUtils.class
+com\example\app\controller\UserController.class
+com\example\app\service\MailSender.class
+com\example\app\service\UserService.class

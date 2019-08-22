@@ -1,0 +1,1 @@
+package com.example.app;import com.google.common.hash.Hashing;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import java.nio.charset.StandardCharsets;@SpringBootApplicationpublic class Application {    public static void main(String[] args) { SpringApplication.run(Application.class, args); }}

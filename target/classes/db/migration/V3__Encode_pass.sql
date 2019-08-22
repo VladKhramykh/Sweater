@@ -1,0 +1,1 @@
+update user set password = sha2(password, 256) where id != 0;
