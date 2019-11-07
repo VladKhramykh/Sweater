@@ -1,0 +1,1 @@
+package com.example.app.Repositories.dao;import com.example.app.domain.Message;import com.example.app.domain.User;import java.util.List;public interface MessageDao {    Message getById(Long id);    List<Message> getByTag(String tag);    List<Message> getAll();    void update(Message message);    void delete(Message message);    List<Message> getByUser(User user);}

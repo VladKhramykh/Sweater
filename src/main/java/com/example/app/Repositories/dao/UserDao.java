@@ -1,0 +1,1 @@
+package com.example.app.Repositories.dao;import com.example.app.domain.User;import java.util.List;public interface UserDao {    User findUserByUsername(String username);    User findUserByUsernamePassword(String username, String password);    void updateUser(User user);//    void deleteUser(User user);    List<User> getAll();}
