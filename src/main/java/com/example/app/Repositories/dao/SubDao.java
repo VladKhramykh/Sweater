@@ -1,0 +1,1 @@
+package com.example.app.Repositories.dao;import com.example.app.domain.User;public interface SubDao {    void subscribe(User user, User currentUser);    void unsubscribe(User user, User currentUser);}

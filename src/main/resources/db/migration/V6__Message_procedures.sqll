@@ -1,0 +1,142 @@
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure GetMessageByTag(in tag varchar(255))
+begin
+	select * from message where message.tag = tag;
+end $$
+delimiter ;
+
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure GetAllMessages()
+begin
+	select * from message;
+end $$
+delimiter ;
+
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure UpdateMessage(in id bigint, in filename varchar(255), in tag varchar(255), in text varchar(255), in user_id bigint)
+begin
+	update sweater.message set message.filename = filename, message.tag = tag, message.text = text, message.user_id = user_id where message.id = id;
+end $$
+delimiter ;
+
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure GetMessagesByUserId(in user_id bigint)
+begin
+	select * from sweater.message where message.user_id = user_id;
+end $$
+delimiter ;
+
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure AddMessage(in filename varchar(255), in tag varchar(255), in text varchar(255), in user_id bigint)
+begin
+	insert into message (filename, tag, text, user_id) values (filename, tag, text, user_id);
+end $$
+delimiter ;
+
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure GetSubMessagesByUsers(in id bigint)
+begin
+	select * from message where user_id in (select channel_id from user_subscriptions where subscriber_id = id);
+end $$
+delimiter ;
+
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure GetSubMessagesByUsersAndTag(in id bigint, in tag varchar(255))
+begin
+	select * from message where user_id in (select channel_id from user_subscriptions where subscriber_id = id) and message.tag = tag;
+end $$
+delimiter ;
+-- -------------------------------------------------------------------
+delimiter $$
+create procedure GetAllMessageDto(in cur_id bigint)
+begin
+	declare id bigint default 0;
+	declare filename varchar(255);
+	declare tag varchar(255);
+	declare text varchar(2048);
+	declare author bigint;
+	declare countOfLikes bigint;
+	declare meLiked boolean;
+    
+    DECLARE done INT DEFAULT 0;
+    
+	
+    declare cur cursor for select 
+			m.id, m.filename, m.tag, m.text, m.user_id as author, 
+            count(ml.user_id)
+            from message m left join message_likes ml on m.id = ml.message_id group by m.id; 
+	
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+	
+    drop temporary table if exists `tmp`;
+    create temporary table `tmp` (
+		id bigint,
+		filename varchar(255),
+		tag varchar(255),
+		text varchar(2048),
+		author_id bigint,
+		likes bigint,
+        meLiked boolean
+	);    
+    open cur;
+    
+    read_loop:
+		loop fetch cur into id, filename, tag, text, author, countOfLikes;
+        if done = 1 then
+			 leave read_loop;
+		end if;
+        set meLiked := meLiked(cur_id, id);
+		insert into tmp (id, filename, tag, text, author_id, likes, meLiked) values 
+						(id, filename, tag, text, author, countOfLikes, meLiked);   
+	end loop;
+    close cur;        
+	select * from tmp;           
+end $$
+delimiter ;
+-- -------------------------------------------------------------------
+delimiter $$
+create function meLiked(user_id bigint, message_id bigint)
+returns int
+begin
+	declare result boolean;
+    declare c int unsigned default 0;
+    set c := (select count(*) from message_likes ml where ml.user_id = user_id and ml.message_id = message_id);
+    if(c = 0) then
+		set result := 0;
+	else
+		set result := 1;
+	end if;
+    return result;
+end $$
+delimiter ;
+
+call GetAllMessageDto(3);
+		
+select meLiked(1,4);
+drop procedure GetAllMessageDto;
+drop function meLiked;
+
+call GetMessagesByUserId(2);
+call AddMessage(null, 'ti9', 'OG won', 1); 
+call GetAllMessages();
+call GetSubMessagesByUsers(3);
+call GetSubMessagesByUsersAndTag(2, 'Love');
+call GetCountOfMessage(1);
+
+delete from message where id = 3 ;
+
+drop procedure AddMessage;
+drop procedure GetSubMessagesByUsers;
+use sweater;
+select * from user_subscriptions;
+select * from user;
+select * from message_likes;
+
+

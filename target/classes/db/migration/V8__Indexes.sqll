@@ -1,0 +1,20 @@
+use sweater;
+
+alter table sweater.user add fulltext index(username, email);
+
+ALTER TABLE `sweater`.`message` CHARACTER SET = utf8;
+ALTER TABLE `sweater`.`user` CHARACTER SET = utf8 ;
+ALTER TABLE `sweater`.`log_subs` CHARACTER SET = utf8 ;
+ALTER TABLE `sweater`.`log_message` CHARACTER SET = utf8 ;
+ALTER TABLE `sweater`.`log_user` CHARACTER SET = utf8 ;
+ALTER TABLE `sweater`.`user_role` CHARACTER SET = utf8 ;
+ALTER TABLE `sweater`.`user_subscriptions` CHARACTER SET = utf8 ;
+
+SET character_set_client = 'utf8';
+SET character_set_server = 'utf8';
+SET character_set_results = 'utf8';
+SET collation_connection = @@collation_database;
+
+select * from message;
+
+SHOW VARIABLES WHERE Variable_name LIKE 'character\_set\_%' OR Variable_name LIKE 'collation%';

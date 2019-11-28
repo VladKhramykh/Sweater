@@ -1,0 +1,52 @@
+use sweater;
+
+drop table log_user;
+drop table log_message;
+drop table log_subs;
+
+drop trigger insert_user;
+drop trigger add_message;
+drop trigger subscribe;
+
+CREATE TABLE `log_user` (
+`id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`message` VARCHAR( 255 ) NOT NULL,
+`time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`row_id` bigint NOT NULL
+) ENGINE = MYISAM;
+
+CREATE TABLE `log_message` (
+`id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`message` VARCHAR( 255 ) NOT NULL,
+`time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`row_id` bigint NOT NULL
+) ENGINE = MYISAM;
+
+CREATE TABLE `log_subs` (
+`id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`message` VARCHAR( 255 ) NOT NULL,
+`time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE = MYISAM;
+
+
+delimiter $$
+create trigger insert_user after insert on sweater.user
+for each row begin
+	insert into `log_user` set message = concat('INSERTED (user_id/username): ', new.id, '/', new.username, ', usename: ', new.email), row_id = new.id;
+end;
+
+delimiter $$
+create trigger subscribe after insert on sweater.user_subscriptions
+for each row begin
+	insert into `log_subs` set message = concat('SUBSCRIBED (user_id): ', new.subscriber_id, ', up for (user_id): ', new.channel_id);
+end;
+
+delimiter $$
+create trigger add_message after insert on sweater.message
+for each row begin
+	insert into `log_message` set message = concat('ADDED: message_id: ', new.id, ', by whom (user_id): ', new.user_id), row_id = new.id;
+end;
+
+select * from log_user;
+select * from log_message;
+select * from log_subs;
