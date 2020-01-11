@@ -1,0 +1,63 @@
+CREATE USER 'user'@'localhost' IDENTIFIED with mysql_native_password BY 'password';
+grant select, insert, update, delete on sweater.* to 'user'@'localhost';
+
+grant execute on procedure sweater.AddMessage to 'user'@'localhost';
+grant execute on procedure sweater.ActivateUser to 'user'@'localhost';
+grant execute on procedure sweater.AddUser to 'user'@'localhost';
+grant execute on procedure sweater.DislikeMessage to 'user'@'localhost';
+grant execute on procedure sweater.GetAllMessageBySubsAndTagDto to 'user'@'localhost';
+grant execute on procedure sweater.GetAllMessageBySubsDto to 'user'@'localhost';
+grant execute on procedure sweater.GetAllMessageByTagDto to 'user'@'localhost';
+grant execute on procedure sweater.GetAllMessageByUserDto to 'user'@'localhost';
+grant execute on procedure sweater.GetAllMessageDto to 'user'@'localhost';
+grant execute on procedure sweater.GetAllSimilarUsersByUsername to 'user'@'localhost';
+grant execute on procedure sweater.GetCountOfMessage to 'user'@'localhost';
+grant execute on procedure sweater.GetCountSubscribers to 'user'@'localhost';
+grant execute on procedure sweater.GetCountSubscriptions to 'user'@'localhost';
+grant execute on procedure sweater.GetSubscribersByUserId to 'user'@'localhost';
+grant execute on procedure sweater.GetSubscriptionsByUserId to 'user'@'localhost';
+grant execute on procedure sweater.GetUserByActivationCode to 'user'@'localhost';
+grant execute on procedure sweater.GetUserById to 'user'@'localhost';
+grant execute on procedure sweater.GetUserByUsername to 'user'@'localhost';
+grant execute on procedure sweater.LikeMessage to 'user'@'localhost';
+grant execute on procedure sweater.Subscribe to 'user'@'localhost';
+grant execute on procedure sweater.Unsubscribe to 'user'@'localhost';
+grant execute on procedure sweater.UpdateMessage to 'user'@'localhost';
+grant execute on procedure sweater.UpdateUser to 'user'@'localhost';
+grant execute on function sweater.meLiked to 'user'@'localhost';
+
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password';
+
+grant create, select, insert, update, delete on sweater.* to 'admin'@'localhost';
+grant execute on procedure sweater.AddMessage to 'admin'@'localhost';
+grant execute on procedure sweater.ActivateUser to 'admin'@'localhost';
+grant execute on procedure sweater.AddUser to 'admin'@'localhost';
+grant execute on procedure sweater.DislikeMessage to 'admin'@'localhost';
+grant execute on procedure sweater.GetAllMessageBySubsAndTagDto to 'admin'@'localhost';
+grant execute on procedure sweater.GetAllMessageBySubsDto to 'admin'@'localhost';
+grant execute on procedure sweater.GetAllMessageByTagDto to 'admin'@'localhost';
+grant execute on procedure sweater.GetAllMessageByUserDto to 'admin'@'localhost';
+grant execute on procedure sweater.GetAllMessageDto to 'admin'@'localhost';
+grant execute on procedure sweater.GetAllSimilarUsersByUsername to 'admin'@'localhost';
+grant execute on procedure sweater.GetAllUsers to 'admin'@'localhost';
+grant execute on procedure sweater.GetCountOfMessage to 'admin'@'localhost';
+grant execute on procedure sweater.GetCountSubscriptions to 'admin'@'localhost';
+grant execute on procedure sweater.GetCountSubscribers to 'admin'@'localhost';
+grant execute on procedure sweater.GetRolesByUserId to 'admin'@'localhost';
+grant execute on procedure sweater.GetSubscribersByUserId to 'admin'@'localhost';
+grant execute on procedure sweater.GetSubscriptionsByUserId to 'admin'@'localhost';
+grant execute on procedure sweater.GetUserByActivationCode to 'admin'@'localhost';
+grant execute on procedure sweater.GetUserById to 'admin'@'localhost';
+grant execute on procedure sweater.GetUserByUsername to 'admin'@'localhost';
+grant execute on procedure sweater.LikeMessage to 'admin'@'localhost';
+grant execute on procedure sweater.Subscribe to 'admin'@'localhost';
+grant execute on procedure sweater.Unsubscribe to 'admin'@'localhost';
+grant execute on procedure sweater.UpdateMessage to 'admin'@'localhost';
+grant execute on procedure sweater.DeleteMessage to 'admin'@'localhost';
+grant execute on procedure sweater.UpdateUser to 'admin'@'localhost';
+grant execute on function sweater.meLiked to 'admin'@'localhost';
+grant execute on function sweater.GetLastInsertedMessageXML to 'admin'@'localhost';
+grant execute on function sweater.GetOneMessagesWithTheMostLikes to 'admin'@'localhost';
+grant execute on function sweater.GetMaskingUsers to 'admin'@'localhost';
+

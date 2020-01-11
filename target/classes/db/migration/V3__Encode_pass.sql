@@ -1,1 +1,1 @@
-update user set password = SHA2(password, 256) where id != 0;
+update user set password = SHA2(password, 512) where id = 1;
